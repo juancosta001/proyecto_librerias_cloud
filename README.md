@@ -1,3 +1,15 @@
+# Integrantes
+Juan Acosta
+José Gómez 
+Marcos Estigarribia
+
+#Tareas Realizadas
+
+-Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de cruds
+-José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md
+-Marcos Estigarribia: Encargado de adjuntar la documentación necesaria en el archivo word, asignamiento de roles
+
+
 # 📚 Proyecto Librerías Cloud
 
 Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**. Esta aplicación web permite gestionar una colección de libros, autores y editoriales, implementando funcionalidades CRUD completas.
@@ -33,33 +45,41 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
    cp .env.example .env
    ```
 
-   Modifica el archivo `.env` con tus credenciales de base de datos y otras configuraciones.
+4. Modifica el archivo `.env`:
 
-4. Genera la clave de la aplicación:
+   - Cambia la base de datos de `sqlite` a `mysql`.
+   - Cambia el valor de `DB_DATABASE` a `libreria`.
+   - Descomenta las líneas de configuración de la base de datos (`DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`) y asegúrate de configurarlas correctamente.
+
+5. Genera la clave de la aplicación:
 
    ```bash
    php artisan key:generate
    ```
 
-5. Ejecuta las migraciones para crear las tablas en la base de datos:
+6. Ejecuta las migraciones para crear las tablas en la base de datos:
 
    ```bash
    php artisan migrate
    ```
 
-6. Compila los assets frontend:
+7. Crea un usuario para acceder al sistema:
 
    ```bash
-   npm run dev
+   php artisan db:seed
    ```
 
-7. Inicia el servidor de desarrollo:
+   Este comando ejecutará el seeder configurado que incluye la creación de un usuario predeterminado para el acceso inicial.
+
+
+
+8. Inicia el servidor de desarrollo:
 
    ```bash
    php artisan serve
    ```
 
-   La aplicación estará disponible en `http://localhost:8000`.
+   La aplicación estará disponible en `http://localhost:8000/admin`.
 
 ## 📁 Estructura del proyecto
 
@@ -67,16 +87,10 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
 - `resources/views/`: Vistas Blade para la interfaz de usuario.
 - `routes/web.php`: Definición de rutas web.
 - `database/migrations/`: Archivos de migración para la base de datos.
+- `database/seeders/`: Archivos para poblar la base de datos con datos iniciales.
 - `public/`: Archivos públicos accesibles desde el navegador.
 - `config/`: Archivos de configuración de la aplicación.
 
-## 🧪 Pruebas
-
-Para ejecutar las pruebas unitarias, utiliza el siguiente comando:
-
-```bash
-php artisan test
-```
 
 Asegúrate de haber configurado correctamente el entorno de pruebas en tu archivo `.env`.
 
