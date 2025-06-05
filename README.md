@@ -1,7 +1,14 @@
 # Integrantes
 Juan Acosta
-José Gómez
+José Gómez 
 Marcos Estigarribia
+
+#Tareas Realizadas
+
+-Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de cruds
+-José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md
+-Marcos Estigarribia: Encargado de adjuntar la documentación necesaria en el archivo word, asignamiento de roles
+
 
 # 📚 Proyecto Librerías Cloud
 
@@ -84,13 +91,6 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
 - `public/`: Archivos públicos accesibles desde el navegador.
 - `config/`: Archivos de configuración de la aplicación.
 
-## 🧪 Pruebas
-
-Para ejecutar las pruebas unitarias, utiliza el siguiente comando:
-
-```bash
-php artisan test
-```
 
 Asegúrate de haber configurado correctamente el entorno de pruebas en tu archivo `.env`.
 
