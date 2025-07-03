@@ -2,14 +2,14 @@ FROM php:8.3-fpm
 
 # 1. Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip gnupg2 ca-certificates lsb-release \
+    git curl zip unzip \
     libpng-dev libjpeg-dev libfreetype6-dev \
     libonig-dev libxml2-dev libzip-dev \
     libicu-dev libssl-dev libcurl4-openssl-dev \
-    netcat \
+    netcat gnupg ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. Instala Node.js (última LTS estable) y npm
+# 2. Instala Node.js 18 desde NodeSource (separado por compatibilidad)
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get update && apt-get install -y nodejs
 
@@ -23,24 +23,24 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # 5. Define el directorio de trabajo
 WORKDIR /var/www
 
-# 6. Copia el entrypoint antes de todo
+# 6. Copia y habilita el entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-# 7. Copia composer.* primero y luego instalar dependencias PHP
+# 7. Copia primero los archivos de composer y ejecuta instalación PHP
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader
 
-# 8. Copia el resto del código fuente (incluye artisan, routes, etc)
+# 8. Copia el resto del código
 COPY . .
 
 # 9. Compila assets con Vite
 RUN npm install && npm run build
 
-# 10. Asigna permisos adecuados
+# 10. Ajusta permisos de Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# 11. Expone el puerto de Laravel
+# 11. Exponer puerto
 EXPOSE 8000
