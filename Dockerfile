@@ -42,8 +42,8 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# 9. Expone puerto HTTP
-EXPOSE 80
+# 9. Expone el puerto que usa Railway ($PORT / 8080)
+EXPOSE 8080
 
 # 10. Lanza entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
