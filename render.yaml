@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: laravel-filament-web
+    env: docker
+    plan: free
+    region: oregon
+    branch: main
+    rootDir: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        fromService:
+          name: laravel-filament-db
+          type: pserv
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: laravel
+      - key: DB_USERNAME
+        value: laravel
+      - key: DB_PASSWORD
+        generateValue: true
+
+  - type: pserv
+    name: laravel-filament-db
+    env: mysql
+    plan: free
+    region: oregon
+    mysqlVersion: 8
+    databases:
+      - name: laravel
+    envVars:
+      - key: MYSQL_USER
+        value: laravel
+      - key: MYSQL_PASSWORD
+        generateValue: true
+      - key: MYSQL_DATABASE
+        value: laravel
