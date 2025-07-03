@@ -25,11 +25,11 @@ ENTRYPOINT ["/entrypoint.sh"]
 # 5. Copia primero composer.* para aprovechar la cache
 COPY composer.json composer.lock ./
 
-# 6. Instala dependencias PHP
-RUN composer install --no-dev --optimize-autoloader
-
-# 7. Copia el resto del código fuente
+# 6. Copia el resto del código fuente (incluye artisan y recursos)
 COPY . .
+
+# 7. Instala dependencias PHP
+RUN composer install --no-dev --optimize-autoloader
 
 # 8. Instala y compila assets Vite (frontend)
 RUN npm install && npm run build
