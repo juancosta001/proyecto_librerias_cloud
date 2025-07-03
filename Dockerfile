@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Instala dependencias del sistema
+# 1. Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git curl zip unzip \
     libpng-dev libjpeg-dev libfreetype6-dev \
@@ -11,30 +11,32 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
-# Instala Composer
+# 2. Instala Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Define el directorio de trabajo
+# 3. Define el directorio de trabajo
 WORKDIR /var/www
 
-# Copia el código fuente
-COPY . .
+# 4. Copia el entrypoint antes de todo
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 
-# Asigna permisos generales
-RUN chown -R www-data:www-data /var/www
+# 5. Copia primero composer.* para aprovechar la cache
+COPY composer.json composer.lock ./
 
-# Instala dependencias PHP
+# 6. Instala dependencias PHP
 RUN composer install --no-dev --optimize-autoloader
 
-# Instala dependencias JS y compila assets (Vite)
+# 7. Copia el resto del código fuente
+COPY . .
+
+# 8. Instala y compila assets Vite (frontend)
 RUN npm install && npm run build
 
-# Permisos para Laravel
+# 9. Permisos necesarios
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Exponer el puerto
+# 10. Expone puerto para Laravel
 EXPOSE 8000
-
-# Comando principal
-CMD php artisan serve --host=0.0.0.0 --port=8000
