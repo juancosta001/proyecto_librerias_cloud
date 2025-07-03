@@ -1,33 +1,30 @@
 #!/bin/sh
+set -e
 
 cd /var/www
 
-# Esperar a que MySQL esté listo
-echo "⏳ Esperando conexión con la base de datos en ${DB_HOST}:${DB_PORT}..."
-while ! nc -z "$DB_HOST" "$DB_PORT"; do
-  sleep 3
+# 1) Espera a la base de datos
+echo "⏳ Esperando DB en $DB_HOST:$DB_PORT..."
+until nc -z "$DB_HOST" "$DB_PORT"; do
+  sleep 2
 done
-echo "✅ Base de datos disponible. Continuando..."
+echo "✅ DB disponible"
 
-# Crear .env si no existe
+# 2) Genera .env y APP_KEY si faltan
 if [ ! -f ".env" ]; then
-  echo "⚙️  Generando .env automáticamente..."
-
-  cp .env.example .env 2>/dev/null || touch .env
-
-  # Asegurar que APP_KEY se genere solo si no está seteada
-  if ! grep -q "APP_KEY=" .env; then
-    echo "🔑 Generando APP_KEY automáticamente..."
-    php artisan key:generate
-  fi
+  cp .env.example .env || touch .env
+fi
+if ! grep -q '^APP_KEY=' .env; then
+  php artisan key:generate --force
 fi
 
-# Iniciar el servidor
+# 3) Cache config y migraciones
 php artisan config:cache
 php artisan route:cache
 php artisan migrate --force || true
 php artisan db:seed --force || true
 
-
-echo "🚀 Iniciando Laravel HTTP server..."
-php -d variables_order=EGPCS -S 0.0.0.0:8080 -t public
+# 4) Arranca PHP-FPM en background y Nginx en foreground
+php-fpm -D
+echo "🚀 Iniciando nginx + php-fpm en puerto 8080..."
+nginx -g 'daemon off;'
