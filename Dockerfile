@@ -41,4 +41,4 @@ RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
 # 10. Expone puerto
-EXPOSE 8000
+EXPOSE 8080
