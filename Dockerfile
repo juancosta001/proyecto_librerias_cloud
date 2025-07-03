@@ -1,4 +1,3 @@
-# Imagen base oficial de PHP con FPM
 FROM php:8.2-fpm
 
 # Instala dependencias del sistema
@@ -8,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     libonig-dev libxml2-dev libzip-dev \
     libicu-dev \
     libcurl4-openssl-dev libssl-dev \
+    nodejs npm \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
 
@@ -17,21 +17,24 @@ COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 # Define el directorio de trabajo
 WORKDIR /var/www
 
-# Copia todos los archivos al contenedor
+# Copia el código fuente
 COPY . .
 
-# Asigna permisos previos
+# Asigna permisos generales
 RUN chown -R www-data:www-data /var/www
 
-# Instala dependencias de Laravel sin ejecutar scripts (como npm run build)
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Instala dependencias PHP
+RUN composer install --no-dev --optimize-autoloader
 
-# Da permisos a las carpetas necesarias
+# Instala dependencias JS y compila assets (Vite)
+RUN npm install && npm run build
+
+# Permisos para Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expone el puerto 8000
+# Exponer el puerto
 EXPOSE 8000
 
-# Comando para iniciar Laravel
+# Comando principal
 CMD php artisan serve --host=0.0.0.0 --port=8000
