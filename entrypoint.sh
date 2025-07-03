@@ -26,6 +26,7 @@ fi
 php artisan config:cache
 php artisan route:cache
 php artisan migrate --force || true
+php artisan db:seed --force || true
 
 
 echo "🚀 Iniciando Laravel HTTP server..."

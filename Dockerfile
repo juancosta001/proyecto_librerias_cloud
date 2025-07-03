@@ -28,8 +28,12 @@ COPY . .
 # 6. Instala Composer
 RUN composer install --no-dev --optimize-autoloader
 
-# 7. Compila frontend con Vite
+# 7. Publica los assets de Filament
+RUN php artisan vendor:publish --tag=filament-assets --force
+
+# 8. Compila frontend con Vite
 RUN npm install && npm run build
+
 
 # 8. Copia y da permisos al entrypoint
 COPY entrypoint.sh /entrypoint.sh
