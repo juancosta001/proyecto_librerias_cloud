@@ -11,20 +11,22 @@ done
 echo "✅ DB disponible"
 
 # 2) Genera .env y APP_KEY si faltan
-if [ ! -f ".env" ]; then
-  cp .env.example .env || touch .env
+if [ ! -f .env ]; then
+  cp .env.example .env 2>/dev/null || touch .env
 fi
 if ! grep -q '^APP_KEY=' .env; then
   php artisan key:generate --force
 fi
 
-# 3) Cache config y migraciones
+# 3) Cache config, rutas y migraciones
 php artisan config:cache
 php artisan route:cache
 php artisan migrate --force || true
 php artisan db:seed --force || true
 
-# 4) Arranca PHP-FPM en background y Nginx en foreground
+# 4) Levanta PHP-FPM en background y luego nginx en foreground
+echo "🚀 Arrancando php-fpm..."
 php-fpm -D
-echo "🚀 Iniciando nginx + php-fpm en puerto 8080..."
+
+echo "🚀 Arrancando nginx..."
 nginx -g 'daemon off;'
