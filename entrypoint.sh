@@ -30,4 +30,4 @@ php artisan db:seed --force || true
 
 
 echo "🚀 Iniciando Laravel HTTP server..."
-php artisan serve --host=0.0.0.0 --port=8080
+php -d variables_order=EGPCS -S 0.0.0.0:8080 -t public
