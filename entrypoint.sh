@@ -1,30 +1,30 @@
-#!/bin/bash
+#!/bin/sh
 
-set -e
+cd /var/www
 
-# Espera a que la base de datos esté lista
-echo "⏳ Esperando conexión con la base de datos en $DB_HOST:$DB_PORT..."
-until nc -z "$DB_HOST" "$DB_PORT"; do
-  echo "❗ Aún no disponible. Reintentando en 3s..."
+# Esperar a que MySQL esté listo
+echo "⏳ Esperando conexión con la base de datos en ${DB_HOST}:${DB_PORT}..."
+while ! nc -z "$DB_HOST" "$DB_PORT"; do
   sleep 3
 done
-
 echo "✅ Base de datos disponible. Continuando..."
 
-# Generar clave de aplicación si no existe
-if [ -z "$APP_KEY" ] || ! grep -q "^APP_KEY=" .env; then
-  echo "🔐 Generando APP_KEY automáticamente..."
-  php artisan key:generate --force
+# Crear .env si no existe
+if [ ! -f ".env" ]; then
+  echo "⚙️  Generando .env automáticamente..."
+
+  cp .env.example .env 2>/dev/null || touch .env
+
+  # Asegurar que APP_KEY se genere solo si no está seteada
+  if ! grep -q "APP_KEY=" .env; then
+    echo "🔑 Generando APP_KEY automáticamente..."
+    php artisan key:generate
+  fi
 fi
 
-# Ejecutar migraciones
-echo "🔁 Ejecutando migraciones..."
-php artisan migrate --force
+# Iniciar el servidor
+php artisan config:cache
+php artisan route:cache
+php artisan migrate --force || true
 
-# (Opcional) Ejecutar seeders
-echo "🌱 Ejecutando seeders..."
-php artisan db:seed --force || echo "ℹ️ No se ejecutaron seeders o ya están aplicados."
-
-# Iniciar servidor Laravel
-echo "🚀 Iniciando servidor Laravel en puerto 8080..."
-exec php artisan serve --host=0.0.0.0 --port=8000
+exec php-fpm
