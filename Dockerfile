@@ -8,8 +8,10 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libcurl4-openssl-dev libssl-dev \
     nodejs npm \
+    netcat \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+
 
 # 2. Instala Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer

@@ -3,11 +3,24 @@
 set -e
 
 # Espera hasta que la base de datos esté lista
-echo "Esperando a la base de datos en $DB_HOST:$DB_PORT..."
+# Espera un máximo de 60 segundos a que la DB esté disponible
+timeout=60
+elapsed=0
+
+echo "⏳ Esperando a la base de datos en $DB_HOST:$DB_PORT..."
+
 until nc -z "$DB_HOST" "$DB_PORT"; do
-  echo "Aún no disponible. Esperando..."
+  if [ $elapsed -ge $timeout ]; then
+    echo "❌ Tiempo de espera agotado. No se pudo conectar a la base de datos."
+    exit 1
+  fi
+  echo "⏱️ Esperando..."
   sleep 3
+  elapsed=$((elapsed+3))
 done
+
+echo "✅ Conexión a la base de datos exitosa."
+
 
 echo "✔️ Base de datos disponible. Continuando..."
 
