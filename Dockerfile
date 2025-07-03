@@ -2,42 +2,45 @@ FROM php:8.3-fpm
 
 # 1. Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip \
+    git curl zip unzip gnupg2 ca-certificates lsb-release \
     libpng-dev libjpeg-dev libfreetype6-dev \
     libonig-dev libxml2-dev libzip-dev \
-    libicu-dev libcurl4-openssl-dev libssl-dev \
-    gnupg2 ca-certificates lsb-release \
-    nodejs npm netcat \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl \
+    libicu-dev libssl-dev libcurl4-openssl-dev \
+    netcat \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# 2. Instala Composer (desde contenedor oficial)
+# 2. Instala Node.js (última LTS estable) y npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update && apt-get install -y nodejs
+
+# 3. Instala extensiones PHP necesarias
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl
+
+# 4. Instala Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# 3. Define el directorio de trabajo
+# 5. Define el directorio de trabajo
 WORKDIR /var/www
 
-# 4. Copia el entrypoint antes de todo
+# 6. Copia el entrypoint antes de todo
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-# 5. Copia primero los archivos de Composer para aprovechar cache
+# 7. Copia composer.* primero y luego instalar dependencias PHP
 COPY composer.json composer.lock ./
-
-# 6. Instala dependencias PHP (sin dev para producción)
 RUN composer install --no-dev --optimize-autoloader
 
-# 7. Copia el resto del código fuente (artisan incluido)
+# 8. Copia el resto del código fuente (incluye artisan, routes, etc)
 COPY . .
 
-# 8. Compila assets con Vite
+# 9. Compila assets con Vite
 RUN npm install && npm run build
 
-# 9. Permisos necesarios para Laravel
+# 10. Asigna permisos adecuados
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# 10. Expone puerto para Laravel
+# 11. Expone el puerto de Laravel
 EXPOSE 8000
