@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Instala dependencias del sistema necesarias para PHP y Laravel
+# 1. Instala dependencias del sistema
 RUN apt-get update && apt-get install -y \
     git curl zip unzip \
     libpng-dev libjpeg-dev libfreetype6-dev \
@@ -12,37 +12,33 @@ RUN apt-get update && apt-get install -y \
         pdo pdo_mysql mbstring exif pcntl bcmath gd zip intl \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instala Node.js 18.x
+# 2. Instala Node.js 18.x
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get update && apt-get install -y nodejs \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    && apt-get install -y nodejs
 
-# Instala Composer
+# 3. Instala Composer
 COPY --from=composer:2.6 /usr/bin/composer /usr/bin/composer
 
-# Define el directorio de trabajo
+# 4. Define directorio de trabajo
 WORKDIR /var/www
 
-# Copia el entrypoint antes de todo
+# 5. Copia TODO el proyecto primero
+COPY . .
+
+# 6. Instala Composer
+RUN composer install --no-dev --optimize-autoloader
+
+# 7. Compila frontend con Vite
+RUN npm install && npm run build
+
+# 8. Copia y da permisos al entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-# Copia solo los archivos composer primero para usar cache
-COPY composer.json composer.lock ./
-
-# Instala dependencias PHP
-RUN composer install --no-dev --optimize-autoloader
-
-# Copia el resto del proyecto
-COPY . .
-
-# Compila assets con Vite
-RUN npm install && npm run build
-
-# Asigna permisos a Laravel
+# 9. Permisos necesarios
 RUN chown -R www-data:www-data storage bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
 
-# Expone el puerto de Laravel
+# 10. Expone puerto
 EXPOSE 8000
