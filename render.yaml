@@ -19,7 +19,6 @@ services:
       - key: DB_HOST
         fromService:
           name: laravel-filament-db
-          type: pserv
       - key: DB_PORT
         value: 3306
       - key: DB_DATABASE
@@ -27,7 +26,10 @@ services:
       - key: DB_USERNAME
         value: laravel
       - key: DB_PASSWORD
-        generateValue: true
+        fromService:
+          name: laravel-filament-db
+          type: pserv
+          envVarKey: MYSQL_PASSWORD
 
   - type: pserv
     name: laravel-filament-db
