@@ -1,13 +1,17 @@
+- **Repositorio de GitHub**: [https://github.com/juancosta001/proyecto_librerias_cloud](https://github.com/juancosta001/proyecto_librerias_cloud)
 # Integrantes
 Juan Acosta
 José Gómez 
 Marcos Estigarribia
 
-#Tareas Realizadas
+# Enlace de Acceso
+https://proyectolibreriascloud-production.up.railway.app/admin/login
 
--Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de cruds
+# Tareas Realizadas
+
+-Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de crud,encargado de realizar el despliegue automatizado
 -José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md
--Marcos Estigarribia: Encargado de adjuntar la documentación necesaria en el archivo word, asignamiento de roles
+-Marcos Estigarribia: Asignamiento de roles,creación del tablero trello
 
 
 # 📚 Proyecto Librerías Cloud
@@ -23,7 +27,7 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
 - **Composer**: Gestión de dependencias PHP.
 - **PHPUnit**: Framework de pruebas para PHP.
 
-## ⚙️ Instalación y configuración
+## ⚙️ Instalación local y configuración
 
 1. Clona el repositorio:
 
@@ -81,6 +85,11 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
 
    La aplicación estará disponible en `http://localhost:8000/admin`.
 
+## En caso de acceso en la página web
+1. Ingresar a https://proyectolibreriascloud-production.up.railway.app/admin/login
+2. Ingresar con el usuario por defecto, admin@gmail.com y admin.
+3. Ya se puede ingresar y manipular el CRUD para librerías.
+
 ## 📁 Estructura del proyecto
 
 - `app/`: Contiene los controladores, modelos y lógica de negocio.
@@ -93,6 +102,45 @@ Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**.
 
 
 Asegúrate de haber configurado correctamente el entorno de pruebas en tu archivo `.env`.
+
+# Despliegue
+
+## Despliegue en Railway
+
+El proyecto está desplegado en **Railway**, donde se utiliza Docker para contenerizar la aplicación y nginx para servir tanto la aplicación web como los archivos estáticos. El proceso de despliegue se ejecuta automáticamente cada vez que se realiza un commit a la rama `main` del repositorio. La aplicación se despliega en una cápsula separada para el backend y otra para la base de datos.
+
+### Pasos para el despliegue:
+
+1. **Docker**: 
+   La aplicación se ejecuta dentro de un contenedor Docker. El contenedor incluye todos los servicios necesarios para ejecutar el proyecto (PHP, Nginx, Node.js y base de datos MySQL).
+   
+2. **Nginx y PHP-FPM**:
+   Utilizamos **nginx** como servidor web y **PHP-FPM** para procesar las solicitudes PHP. El archivo de configuración de nginx se encuentra en `default.conf` y se encarga de servir los archivos estáticos generados por Vite y de manejar las rutas dinámicas a través de Laravel.
+
+3. **Dockerfile**:
+   El `Dockerfile` se configura para instalar las dependencias necesarias, compilar los archivos de frontend (con Vite), ejecutar las migraciones y publicar los assets de Filament, y finalmente arrancar el servidor con Nginx y PHP-FPM.
+
+4. **Automatización del despliegue**:
+   Cada vez que se realiza un commit a la rama `main`, Railway ejecuta el flujo de despliegue que construye el contenedor, publica los cambios y lanza la nueva versión de la aplicación. 
+
+# Capturas de pantalla de la ejecución o despliegue
+
+# Build logs
+<img width="1036" height="896" alt="Captura desde 2025-07-13 14-30-31" src="https://github.com/user-attachments/assets/3a4c5303-b0d8-48ed-a2ec-130f0478d05f" />
+_Log de construcción del proyecto_
+
+# Deploy logs
+<img width="1036" height="896" alt="Captura desde 2025-07-13 14-31-14" src="https://github.com/user-attachments/assets/66f0fb2a-b8e1-4dac-9306-da58975c3f02" />
+_Log de despliegue del contenedor_
+
+# Historial de despliegue
+
+<img width="1036" height="896" alt="Captura desde 2025-07-13 14-33-00" src="https://github.com/user-attachments/assets/bce975a6-1b7a-4c06-9ecd-1a4e61ae7e13" />
+_Historial de versiones desplegadas en Railway_
+
+# Contenedor con la base de datos
+<img width="1036" height="896" alt="Captura desde 2025-07-13 14-33-27" src="https://github.com/user-attachments/assets/80f47599-54b6-4263-a9d3-522849d3179b" />
+_Vista del contenedor de la base de datos en Railway_
 
 ## 📄 Licencia
 
