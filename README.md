@@ -19,7 +19,7 @@ https://trello.com/invite/b/6873ece26549981a63c88afb/ATTI7d986a2c3839c9f96facf59
 
 # 📚 Proyecto Librerías Cloud
 
-Proyecto desarrollado para el segundo parcial de la materia **Cloud Computing**. Esta aplicación web permite gestionar una colección de libros, autores y editoriales, implementando funcionalidades CRUD completas.
+Proyecto desarrollado para el examen final de la materia **Cloud Computing**. Esta aplicación web permite gestionar una colección de libros, autores y editoriales, implementando funcionalidades CRUD completas.
 
 ## 🚀 Tecnologías utilizadas
 
