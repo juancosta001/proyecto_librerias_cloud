@@ -14,6 +14,8 @@ Contraseña: admin
 -José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md
 -Marcos Estigarribia: Asignamiento de roles,creación del tablero trello
 
+# Enlace al trello
+https://trello.com/invite/b/6873ece26549981a63c88afb/ATTI7d986a2c3839c9f96facf590678ef766004E87B1/mi-tablero-de-trello
 
 # 📚 Proyecto Librerías Cloud
 
