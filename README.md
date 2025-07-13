@@ -6,7 +6,8 @@ Marcos Estigarribia
 
 # Enlace de Acceso
 https://proyectolibreriascloud-production.up.railway.app/admin/login
-
+Usuario por defecto: admin@gmail.com 
+Contraseña: admin
 # Tareas Realizadas
 
 -Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de crud,encargado de realizar el despliegue automatizado
