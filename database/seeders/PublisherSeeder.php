@@ -13,25 +13,31 @@ class PublisherSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('publishers')->insert([
+        $publishers = [
             [
-            'name' => 'Editorial Planeta',
-            'address' => 'Calle Mayor 123, Madrid',
-            'created_at' => now(),
-            'updated_at' => now(),
+                'name' => 'Editorial Planeta',
+                'address' => 'Calle Mayor 123, Madrid',
             ],
             [
-            'name' => 'Santillana',
-            'address' => 'Avenida de América 45, Barcelona ',
-            'created_at' => now(),
-            'updated_at' => now(),
+                'name' => 'Santillana',
+                'address' => 'Avenida de América 45, Barcelona ',
             ],
             [
-            'name' => 'Alfaguara',
-            'address' => 'Gran Vía 67, Madrid',
-            'created_at' => now(),
-            'updated_at' => now(),
+                'name' => 'Alfaguara',
+                'address' => 'Gran Vía 67, Madrid',
             ],
-        ]);
+        ];
+
+        foreach ($publishers as $publisher) {
+            $exists = DB::table('publishers')->where('name', $publisher['name'])->exists();
+            if (!$exists) {
+                DB::table('publishers')->insert([
+                    'name' => $publisher['name'],
+                    'address' => $publisher['address'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
     }
 }
