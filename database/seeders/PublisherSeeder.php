@@ -22,7 +22,7 @@ class PublisherSeeder extends Seeder
             ],
             [
             'name' => 'Santillana',
-            'address' => 'Avenida de América 45, Barcelona',
+            'address' => 'Avenida de América 45, Barcelona ',
             'created_at' => now(),
             'updated_at' => now(),
             ],
