@@ -21,9 +21,11 @@ class PublisherResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
+                    ->label('Dirección')
                     ->maxLength(255),
             ]);
     }
@@ -32,10 +34,10 @@ class PublisherResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('address')->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable(),
+                Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('Nombre')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('address')->label('Dirección')->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')->dateTime()->sortable(),
             ])
             ->filters([
                 //
