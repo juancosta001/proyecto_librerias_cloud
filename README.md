@@ -14,6 +14,8 @@ Contraseña: admin
 -José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md. Creacion del modulo de prestamos
 -Marcos Estigarribia: Asignamiento de roles,creación del tablero trello, encargado de la edicion del video
 
+# Enlace al video de presentacion del sistema
+https://www.youtube.com/watch?v=_fHEmIsfeoo&ab_channel=MarcoEstigarribia
 # Enlace al trello
 https://trello.com/invite/b/6873ece26549981a63c88afb/ATTI7d986a2c3839c9f96facf590678ef766004E87B1/mi-tablero-de-trello
 
