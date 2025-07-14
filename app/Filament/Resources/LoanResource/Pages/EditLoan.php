@@ -16,4 +16,13 @@ class EditLoan extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+     public function getTitle(): string
+    {
+        return "Editar Prestamo";
+    }
+    public function getRedirectUrl(): string|null
+    {
+        return route('filament.admin.resources.loans.index');
+    }
 }
