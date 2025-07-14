@@ -14,7 +14,7 @@ class BookSeeder extends Seeder
     public function run(): void
     {
         // Elimina todos los registros existentes para volver a ejecutar el seeder
-        DB::table('books')->truncate();
+        DB::table('books')->delete();
 
         DB::table('books')->insert([
             [
@@ -24,6 +24,7 @@ class BookSeeder extends Seeder
                 'author_id' => 1,
                 'category_id' => 1,
                 'publisher_id' => 1,
+                'stock' => 6,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -34,6 +35,7 @@ class BookSeeder extends Seeder
                 'author_id' => 2,
                 'category_id' => 1,
                 'publisher_id' => 2,
+                'stock' => 4,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -44,6 +46,7 @@ class BookSeeder extends Seeder
                 'author_id' => 3,
                 'category_id' => 1,
                 'publisher_id' => 3,
+                'stock' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
