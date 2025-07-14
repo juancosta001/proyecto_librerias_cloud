@@ -13,34 +13,36 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('books')->insert([
+        if (DB::table('books')->count() === 0) {
+            DB::table('books')->insert([
             [
-            'title' => 'El Quijote',
-            'isbn_code' => '978-84-376-0494-7',
-            'publication_date' => '1605-01-16',
-            'author_id' => 1,
-            'category_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
+                'title' => 'El Quijote',
+                'isbn_code' => '978-84-376-0494-7',
+                'publication_date' => '1605-01-16',
+                'author_id' => 1,
+                'category_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-            'title' => 'Cien Años de Soledad',
-            'isbn_code' => '978-84-376-0495-4',
-            'publication_date' => '1967-05-30',
-            'author_id' => 2,
-            'category_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
+                'title' => 'Cien Años de Soledad',
+                'isbn_code' => '978-84-376-0495-4',
+                'publication_date' => '1967-05-30',
+                'author_id' => 2,
+                'category_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-            'title' => 'Rayuela',
-            'isbn_code' => '978-84-376-0496-1',
-            'publication_date' => '1963-06-28',
-            'author_id' => 3,
-            'category_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
+                'title' => 'Rayuela',
+                'isbn_code' => '978-84-376-0496-1',
+                'publication_date' => '1963-06-28',
+                'author_id' => 3,
+                'category_id' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
-        ]);
+            ]);
+        }
     }
 }
