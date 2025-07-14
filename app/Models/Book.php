@@ -14,6 +14,7 @@ class Book extends Model
         'isbn_code',
         'publication_date',
         'author_id',
+        'stock'
     ];
 
     public function author()
