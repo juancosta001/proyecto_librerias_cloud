@@ -45,6 +45,11 @@ class BookResource extends Resource
                     ->label('Categoría')
                     ->relationship('category', 'name')
                     ->required(),
+
+                Forms\Components\Select::make('publisher_id')
+                    ->label('Editorial')
+                    ->relationship('publisher', 'name')
+                    ->required(),
             ]);
     }
 
@@ -76,6 +81,11 @@ class BookResource extends Resource
                     ->label('Categoría')
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('publisher.name')
+                    ->label('Editorial')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -89,7 +99,6 @@ class BookResource extends Resource
                 ]),
             ]);
     }
-
     public static function getRelations(): array
     {
         return [

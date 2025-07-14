@@ -13,14 +13,17 @@ class BookSeeder extends Seeder
      */
     public function run(): void
     {
-        if (DB::table('books')->count() === 0) {
-            DB::table('books')->insert([
+        // Elimina todos los registros existentes para volver a ejecutar el seeder
+        DB::table('books')->truncate();
+
+        DB::table('books')->insert([
             [
                 'title' => 'El Quijote',
                 'isbn_code' => '978-84-376-0494-7',
                 'publication_date' => '1605-01-16',
                 'author_id' => 1,
                 'category_id' => 1,
+                'publisher_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -30,6 +33,7 @@ class BookSeeder extends Seeder
                 'publication_date' => '1967-05-30',
                 'author_id' => 2,
                 'category_id' => 1,
+                'publisher_id' => 2,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -39,10 +43,10 @@ class BookSeeder extends Seeder
                 'publication_date' => '1963-06-28',
                 'author_id' => 3,
                 'category_id' => 1,
+                'publisher_id' => 3,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            ]);
-        }
+        ]);
     }
 }
