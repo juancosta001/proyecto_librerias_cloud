@@ -11,8 +11,8 @@ Contraseña: admin
 # Tareas Realizadas
 
 -Juan Acosta: Encargado de Levantar el proyecto,definición de tecnologías, definición de tablas, creación de crud,encargado de realizar el despliegue automatizado
--José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md
--Marcos Estigarribia: Asignamiento de roles,creación del tablero trello
+-José Gómez: Encargado de crear el crud de Categorias,realizo pull request, encargado del readme.md. Creacion del modulo de prestamos
+-Marcos Estigarribia: Asignamiento de roles,creación del tablero trello, encargado de la edicion del video
 
 # Enlace al trello
 https://trello.com/invite/b/6873ece26549981a63c88afb/ATTI7d986a2c3839c9f96facf590678ef766004E87B1/mi-tablero-de-trello
