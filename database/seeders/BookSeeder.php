@@ -14,7 +14,7 @@ class BookSeeder extends Seeder
     public function run(): void
     {
         // Elimina todos los registros existentes para volver a ejecutar el seeder
-        DB::table('books')->truncate();
+        DB::table('books')->delete();
 
         DB::table('books')->insert([
             [
