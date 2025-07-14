@@ -50,6 +50,9 @@ class BookResource extends Resource
                     ->label('Editorial')
                     ->relationship('publisher', 'name')
                     ->required(),
+                    Forms\Components\TextInput::make('stock')
+                    ->label('Stock')
+                    ->required(),
             ]);
     }
 
@@ -86,6 +89,10 @@ class BookResource extends Resource
                     ->label('Editorial')
                     ->sortable()
                     ->searchable(),
+                    Tables\Columns\TextColumn::make('stock')
+                    ->label('Stock')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
