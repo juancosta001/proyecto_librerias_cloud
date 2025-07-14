@@ -2,26 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\PublisherResource\Pages;
+use App\Models\Publisher;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class PublisherResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = Publisher::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-tag';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Libreria';
 
-    protected static ?string $navigationLabel = 'Categorias';
-    protected static ?string $pluralLabel = 'Categorias';
+    protected static ?string $navigationLabel = 'Editoriales';
+    protected static ?string $pluralLabel = 'Editoriales';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -30,9 +28,9 @@ class CategoryResource extends Resource
                     ->label('Nombre')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('description')
-                    ->label('Descripcion')
-                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('address')
+                    ->label('Dirección')
+                    ->maxLength(255),
             ]);
     }
 
@@ -40,12 +38,10 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nombre')
-                    ->searchable(),
-                    Tables\Columns\TextColumn::make('description')
-                    ->label('Deescripción')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('id')->label('ID')->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('Nombre')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('address')->label('Dirección')->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->label('Fecha de creación')->dateTime()->sortable(),
             ])
             ->filters([
                 //
@@ -70,9 +66,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListPublishers::route('/'),
+            'create' => Pages\CreatePublisher::route('/create'),
+            'edit' => Pages\EditPublisher::route('/{record}/edit'),
         ];
     }
 }
