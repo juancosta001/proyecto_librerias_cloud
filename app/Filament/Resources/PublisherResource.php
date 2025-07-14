@@ -15,6 +15,10 @@ class PublisherResource extends Resource
     protected static ?string $model = Publisher::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Libreria';
+
+    protected static ?string $navigationLabel = 'Editoriales';
+    protected static ?string $pluralLabel = 'Editoriales';
 
     public static function form(Form $form): Form
     {
