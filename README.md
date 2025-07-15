@@ -117,7 +117,7 @@ El proyecto está desplegado en **Railway**, donde se utiliza Docker para conten
 ### Pasos para el despliegue:
 
 1. **Docker**: 
-   La aplicación se ejecuta dentro de un contenedor Docker. El contenedor incluye todos los servicios necesarios para ejecutar el proyecto (PHP, Nginx, Node.js y base de datos MySQL).
+   La aplicación se ejecuta dentro de un contenedor Docker. El contenedor incluye todos los servicios necesarios para ejecutar el proyecto (PHP, Nginx, Node.js y otro contenedor para la base de datos MySQL).
    
 2. **Nginx y PHP-FPM**:
    Utilizamos **nginx** como servidor web y **PHP-FPM** para procesar las solicitudes PHP. El archivo de configuración de nginx se encuentra en `default.conf` y se encarga de servir los archivos estáticos generados por Vite y de manejar las rutas dinámicas a través de Laravel.
