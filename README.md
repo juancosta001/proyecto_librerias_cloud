@@ -31,6 +31,7 @@ Proyecto desarrollado para el examen final de la materia **Cloud Computing**. Es
 - **Vite**: Herramienta de compilación para assets frontend.
 - **Composer**: Gestión de dependencias PHP.
 - **PHPUnit**: Framework de pruebas para PHP.
+- **Docker**: Plataforma de código abierto que permite automatizar el despliegue, la ejecución y la gestión de aplicaciones utilizando contenedores
 
 ## ⚙️ Instalación local y configuración
 
